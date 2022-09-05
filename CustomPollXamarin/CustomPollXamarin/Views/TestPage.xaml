@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    x:Class="CustomPollXamarin.Views.TestPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:CustomPollXamarin.Controls"
+    xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+    Title="Custom Poll"
+    ios:Page.UseSafeArea="true"
+    NavigationPage.IconColor="{DynamicResource baseColor}">
+    <ContentPage.Content>
+
+        <Grid Padding="30" Grid.Row="0" RowDefinitions="*, auto">
+            <Frame Padding="20" BorderColor="Black">
+                <controls:PollControl
+                    
+                    ItemSources="{Binding QuestionaryList}"
+                    MainColor="{Binding ObjInit.ColorTheme}" />
+            </Frame>
+
+            <StackLayout Grid.Row="1" Orientation="Horizontal">
+                <Button
+                    Command="{Binding NextCommand}"
+                    HorizontalOptions="FillAndExpand"
+                    Text="Back"/>
+                <Button
+                    Command="{Binding BackCommand}"
+                    HorizontalOptions="FillAndExpand"
+                    Text="Next"/>
+            </StackLayout>
+        </Grid>
+
+    </ContentPage.Content>
+</ContentPage>

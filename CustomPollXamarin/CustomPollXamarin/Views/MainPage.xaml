@@ -1,0 +1,150 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    x:Class="CustomPollXamarin.Views.MainPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+    xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+    ios:Page.UseSafeArea="true">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <xct:InvertedBoolConverter x:Key="InvertedBoolConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid Padding="30" RowDefinitions="*, auto">
+            <StackLayout Grid.Row="0" Spacing="30">
+                <StackLayout x:Name="_numberSteps">
+                    <Label Text="How Many Steps?" />
+                    <Slider
+                        x:Name="_slider"
+                        Maximum="30"
+                        Minimum="1"
+                        ValueChanged="_slider_ValueChanged"
+                        Value="{Binding NumerOfSteps}" />
+                    <Label
+                        FontSize="Title"
+                        HorizontalOptions="CenterAndExpand"
+                        Text="{Binding Source={x:Reference _slider}, Path=Value}" />
+                </StackLayout>
+
+                <StackLayout x:Name="_colorSteps">
+                    <Label Text="The Main Color?" />
+                    <Picker SelectedItem="{Binding SelectedColor}" x:Name="_pickerColor">
+                        <Picker.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>Red</x:String>
+                                <x:String>Blue</x:String>
+                                <x:String>Purple</x:String>
+                            </x:Array>
+                        </Picker.ItemsSource>
+                    </Picker>
+                    <Label
+                        FontSize="Title"
+                        HorizontalOptions="CenterAndExpand"
+                        Text="{Binding Source={x:Reference _pickerColor}, Path=SelectedItem}"
+                        TextColor="{Binding Source={x:Reference _pickerColor}, Path=SelectedItem}" />
+                </StackLayout>
+
+                <!--#region Checkbox-->
+                <StackLayout x:Name="_questKind">
+                    <StackLayout Orientation="Horizontal" Spacing="23">
+                        <CheckBox x:Name="_entryCheck" IsChecked="{Binding IsEntry}" />
+                        <Label Text="Entry" VerticalTextAlignment="Center">
+                            <Label.Triggers>
+                                <DataTrigger
+                                    Binding="{Binding Source={x:Reference _entryCheck}, Path=IsChecked}"
+                                    TargetType="Label"
+                                    Value="true">
+                                    <Setter Property="FontAttributes" Value="Bold" />
+                                    <Setter Property="FontSize" Value="Large" />
+                                </DataTrigger>
+                            </Label.Triggers>
+                        </Label>
+                        <Stepper
+                            Value="{Binding EntrySteps}"
+                            VerticalOptions="Center"
+                            x:Name="_entryStepper"
+                            Increment="1"
+                            IsVisible="{Binding Source={x:Reference _entryCheck}, Path=IsChecked}" />
+
+                        <Label
+                            FontSize="Large"
+                            HorizontalOptions="Center"
+                            IsVisible="{Binding Source={x:Reference _entryCheck}, Path=IsChecked}"
+                            Text="{Binding Source={x:Reference _entryStepper}, Path=Value}"
+                            VerticalOptions="CenterAndExpand" />
+                    </StackLayout>
+
+                    <StackLayout Orientation="Horizontal" Spacing="20">
+                        <CheckBox x:Name="_pickerCheck" IsChecked="{Binding IsPicker}" />
+                        <Label Text="Picker" VerticalTextAlignment="Center">
+                            <Label.Triggers>
+                                <DataTrigger
+                                    Binding="{Binding Source={x:Reference _pickerCheck}, Path=IsChecked}"
+                                    TargetType="Label"
+                                    Value="true">
+                                    <Setter Property="FontAttributes" Value="Bold" />
+                                    <Setter Property="FontSize" Value="Large" />
+                                </DataTrigger>
+                            </Label.Triggers>
+                        </Label>
+                        <Stepper
+                            Value="{Binding PickerSteps}"
+                            VerticalOptions="Center"
+                            x:Name="_pickerStep"
+                            Increment="1"
+                            IsVisible="{Binding Source={x:Reference _pickerCheck}, Path=IsChecked}" />
+
+                        <Label
+                            FontSize="Large"
+                            HorizontalOptions="Center"
+                            IsVisible="{Binding Source={x:Reference _pickerCheck}, Path=IsChecked}"
+                            Text="{Binding Source={x:Reference _pickerStep}, Path=Value}"
+                            VerticalOptions="CenterAndExpand" />
+                    </StackLayout>
+
+                    <StackLayout Orientation="Horizontal" Spacing="20">
+                        <CheckBox x:Name="_checkCheck" IsChecked="{Binding IsCheck}" />
+                        <Label Text="Check" VerticalTextAlignment="Center">
+                            <Label.Triggers>
+                                <DataTrigger
+                                    Binding="{Binding Source={x:Reference _checkCheck}, Path=IsChecked}"
+                                    TargetType="Label"
+                                    Value="true">
+                                    <Setter Property="FontAttributes" Value="Bold" />
+                                    <Setter Property="FontSize" Value="Large" />
+                                </DataTrigger>
+                            </Label.Triggers>
+                        </Label>
+                        <Stepper
+                            Value="{Binding CheckSteps}"
+                            VerticalOptions="Center"
+                            x:Name="_checkStep"
+                            Increment="1"
+                            IsVisible="{Binding Source={x:Reference _checkCheck}, Path=IsChecked}" />
+                        <Label
+                            FontSize="Large"
+                            HorizontalOptions="Center"
+                            IsVisible="{Binding Source={x:Reference _checkCheck}, Path=IsChecked}"
+                            Text="{Binding Source={x:Reference _checkStep}, Path=Value}"
+                            VerticalOptions="CenterAndExpand" />
+                    </StackLayout>
+                </StackLayout>
+                <!--#endregion-->
+
+            </StackLayout>
+            <StackLayout
+                x:Name="_buttonStack"
+                Grid.Row="1"
+                HorizontalOptions="FillAndExpand"
+                Orientation="Horizontal">
+
+                <Button
+                    Command="{Binding NextCompleteCommand}"
+                    HorizontalOptions="FillAndExpand"
+                    Text="Init" />
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
